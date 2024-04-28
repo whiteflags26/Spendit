@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SpenditWeb.Models.Category>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["PageActionText"] = "+ New Category";
+    ViewData["PageActionUrl"] = "/Category/Create";
+}
+
+<p>
+    <div>
+        @if (ViewData["PageActionText"] != null)
+        {
+            <a class="btn btn-danger" href="@ViewData["PageActionUrl"]">
+                @ViewData["PageActionText"]
+            </a>
+        }
+    </div>
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <ejs-grid id="categories" dataSource="@Model" gridLines="None"
+                  allowSorting="true" allowPaging="true" toolbar="@(new List<string>() { "Search"})">
+            <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Category" field="TitleWithIcon" textAlign="Justify" width="250px"></e-grid-column>
+                <e-grid-column headerText="Type" template="#typeColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
+                <e-grid-column headerText="Actions" template="#actionColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+<script id="typeColumnTemplate" type="text/x-template">
+    ${if(Type=="Income")}
+        <span class="badge bg-info">${Type}</span>
+    ${else}
+        <span class="badge bg-danger">${Type}</span>
+    ${/if}
+</script>
+<script id="actionColumnTemplate" type="text/x-template">
+    <div class="d-flex justify-content-center">
+        <a href="/Category/Edit/${CategoryId}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil-fill"></i>
+        </a>
+        <a href="/Category/Details/${CategoryId}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-info-lg"></i>
+        </a>
+        <a href="/Category/Delete/${CategoryId}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-trash3-fill"></i>
+        </a>
+    </div>
+</script>
