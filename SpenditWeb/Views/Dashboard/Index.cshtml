@@ -84,11 +84,11 @@
             <div class="text-center p-4">
                 <h5 class="fw-bold">Income By Category</h5>
             </div>
-            <ejs-accumulationchart id="doughnutchart2" enableSmartLabels background="white">
+            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="white">
                 <e-accumulation-series-collection>
                     <e-accumulation-series dataSource="@ViewBag.DoughnutChartData2"
                                            xName="CategoryTitleWithIcon" yName="amount"
-                                           innerRadius="0%" legendShape="Circle"
+                                           innerRadius="40%" legendShape="Circle"
                                            palettes=@(new string[]{"#dc3545", "#00ffff", "#f39c12", "#e74c3c","#2c3e50","#ffd700","#2d3142","#3498db","#20c997"})>
                         <e-accumulationseries-datalabel name="formattedAmount" visible></e-accumulationseries-datalabel>
                     </e-accumulation-series>
@@ -106,11 +106,11 @@
             <div class="text-center p-4">
                 <h5 class="fw-bold">Expense By Category</h5>
             </div>
-            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="white">
+            <ejs-accumulationchart id="doughnutchart2" enableSmartLabels background="white">
                 <e-accumulation-series-collection>
                     <e-accumulation-series dataSource="@ViewBag.DoughnutChartData1"
                                            xName="CategoryTitleWithIcon" yName="amount"
-                                           innerRadius="0%" legendShape="Circle"
+                                           innerRadius="40%" legendShape="Circle"
                                            palettes=@(new string[]{"#6f42c1","#ffd700","#2d3142","#3498db","#20c997", "#5e5871", "#00ffff", "#f39c12", "#e74c3c"})>
                         <e-accumulationseries-datalabel name="formattedAmount" visible></e-accumulationseries-datalabel>
                     </e-accumulation-series>
