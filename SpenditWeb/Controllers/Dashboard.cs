@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SpenditWeb.Models;
+using Spendit.DataAccess;
+using Spendit.Models;
 
 namespace SpenditWeb.Controllers
 {

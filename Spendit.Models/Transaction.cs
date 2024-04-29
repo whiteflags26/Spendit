@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SpenditWeb.Models
+namespace Spendit.Models
 {
     public class Transaction
     {

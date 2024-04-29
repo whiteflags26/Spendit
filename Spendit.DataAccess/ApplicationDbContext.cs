@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Spendit.Models;
 
-namespace SpenditWeb.Models
+namespace Spendit.DataAccess
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {

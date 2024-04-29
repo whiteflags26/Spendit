@@ -1,7 +1,7 @@
-using SpenditWeb.Models;
+using Spendit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SpenditWeb.Models;
+using Spendit.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
