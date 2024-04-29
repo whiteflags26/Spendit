@@ -54,12 +54,13 @@
     </header>
 
     @*breadcrumb*@
-    @if (SignInManager.IsSignedIn(User))
+    @if (ViewContext.RouteData.Values["controller"]!=null)
     {
         <div class="container" style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
             <ejs-breadcrumb id="breadcrumb"></ejs-breadcrumb>
         </div>
     }
+
 
     <div class="container">
         <main role="main" class="pb-3">
