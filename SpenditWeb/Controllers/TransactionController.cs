@@ -68,7 +68,6 @@ namespace SpenditWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
-            if(transaction.Date == null) transaction.Date = DateTime.Now;
             transaction.UserId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
@@ -76,6 +75,7 @@ namespace SpenditWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            PopulateCategories();
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", transaction.CategoryId);
             return View(transaction);
         }
@@ -131,6 +131,7 @@ namespace SpenditWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", transaction.CategoryId);
             return View(transaction);
         }
