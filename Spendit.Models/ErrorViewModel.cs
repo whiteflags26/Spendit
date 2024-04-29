@@ -1,4 +1,4 @@
-namespace SpenditWeb.Models
+namespace Spendit.Models
 {
     public class ErrorViewModel
     {

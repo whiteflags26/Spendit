@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpenditWeb.Models;
+using Spendit.DataAccess;
 
 #nullable disable
 
 namespace SpenditWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240428175951_AddedTransactionAndCategory")]
+    partial class AddedTransactionAndCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +236,7 @@ namespace SpenditWeb.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SpenditWeb.Models.Category", b =>
+            modelBuilder.Entity("Spendit.DataAccess.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -262,7 +265,7 @@ namespace SpenditWeb.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SpenditWeb.Models.Transaction", b =>
+            modelBuilder.Entity("Spendit.DataAccess.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -293,7 +296,7 @@ namespace SpenditWeb.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("SpenditWeb.Models.SpenditUser", b =>
+            modelBuilder.Entity("Spendit.DataAccess.SpenditUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -359,9 +362,9 @@ namespace SpenditWeb.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpenditWeb.Models.Transaction", b =>
+            modelBuilder.Entity("Spendit.DataAccess.Transaction", b =>
                 {
-                    b.HasOne("SpenditWeb.Models.Category", "Category")
+                    b.HasOne("Spendit.DataAccess.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
