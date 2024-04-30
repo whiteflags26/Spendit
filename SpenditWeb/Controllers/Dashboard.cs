@@ -23,52 +23,40 @@ namespace SpenditWeb.Controllers
 
         public async Task<ActionResult> Index()
         {
-            DateTime StartDate = DateTime.Today.AddDays(-6);
+            DateTime StartDate = DateTime.Today.AddDays(-29);
             DateTime EndDate = DateTime.Today.AddDays(1);
-
-            //Console.WriteLine(StartDate.ToString());
-            //Console.WriteLine(EndDate.ToString());
 
             List<Transaction> SelectedTransactions = await _context.Transactions
             .Include(x => x.Category)
                 .Where(y => y.Date >= StartDate && y.Date <= EndDate && y.Category.UserId == _userManager.GetUserId(User))
                 .ToListAsync();
 
-            //Console.WriteLine('*');
-            //foreach (Transaction transaction in SelectedTransactions)
-            //{
-            //    Console.WriteLine(transaction.Amount.ToString());
-            //}
-            //Console.WriteLine('*');
-
-            // Last 7 day income
+            // Last 30 day income
             int TotalIncome = SelectedTransactions
                 .Where(i => i.Category.Type == "Income")
                 .Sum(j => j.Amount);
 
-            //Console.WriteLine(TotalIncome.ToString());
-
             ViewBag.TotalIncome = TotalIncome.ToString("c0");
 
-            // Last 7 day expense
+            // Last 30 day expense
             int TotalExpense = SelectedTransactions
                 .Where(i => i.Category.Type == "Expense")
                 .Sum(j => j.Amount);
 
             ViewBag.Expense = TotalExpense.ToString("c0");
 
-            //Console.WriteLine(TotalExpense.ToString());
 
-            // Last 7 day balance
+            // Last 30 day balance
             int Balance = TotalIncome - TotalExpense;
             int AbsoluteBalance = (Balance < 0) ? Balance * -1 : Balance;
 
             ViewBag.Balance = (Balance < 0 ? "-" : "") + AbsoluteBalance.ToString("c0");
             ViewBag.TrueBalance = Balance.ToString();
 
-            //Doughnut Chart - Expense By Category
+
+            //Doughnut Chart - Income By Category
             ViewBag.DoughnutChartData1 = SelectedTransactions
-                .Where(i => i.Category.Type == "Expense")
+                .Where(i => i.Category.Type == "Income")
                 .GroupBy(j => j.Category.CategoryId)
                 .Select(k => new
                 {
@@ -78,9 +66,10 @@ namespace SpenditWeb.Controllers
                 })
                 .OrderByDescending(l => l.amount)
                 .ToList();
-            //Doughnut Chart - Income By Category
+
+            //Doughnut Chart - Expense By Category
             ViewBag.DoughnutChartData2 = SelectedTransactions
-                .Where(i => i.Category.Type == "Income")
+                .Where(i => i.Category.Type == "Expense")
                 .GroupBy(j => j.Category.CategoryId)
                 .Select(k => new
                 {
@@ -99,7 +88,7 @@ namespace SpenditWeb.Controllers
                 .GroupBy(j => j.Date)
                 .Select(k => new SplineChartData()
                 {
-                    day = k.First().Date.ToString("dd-MMM"),
+                    day = k.First().Date.ToString("dd"),
                     income = k.Sum(l => l.Amount)
                 })
                 .ToList();
@@ -110,17 +99,17 @@ namespace SpenditWeb.Controllers
                 .GroupBy(j => j.Date)
                 .Select(k => new SplineChartData()
                 {
-                    day = k.First().Date.ToString("dd-MMM"),
+                    day = k.First().Date.ToString("dd"),
                     expense = k.Sum(l => l.Amount)
                 })
                 .ToList();
 
             //Combine Income & Expense
-            string[] Last7Days = Enumerable.Range(0, 7)
-                .Select(i => StartDate.AddDays(i).ToString("dd-MMM"))
+            string[] Last30Days = Enumerable.Range(0, 30)
+                .Select(i => StartDate.AddDays(i).ToString("dd"))
                 .ToArray();
 
-            ViewBag.SplineChartData = from day in Last7Days
+            ViewBag.SplineChartData = from day in Last30Days
                                       join income in IncomeSummary on day equals income.day into dayIncomeJoined
                                       from income in dayIncomeJoined.DefaultIfEmpty()
                                       join expense in ExpenseSummary on day equals expense.day into expenseJoined

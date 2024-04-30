@@ -23,10 +23,9 @@
         <ejs-grid id="transactions" dataSource="@Model" gridLines="None"
                   allowSorting="true" allowPaging="true" toolbar="@(new List<string>() { "Search"})">
             <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
-            <e-grid-searchSettings fields="@(new string[] { "CategoryTitleWithIcon", "Date"})" operator="contains" key="" ignoreCase="true"></e-grid-searchSettings>
             <e-grid-columns>
-                <e-grid-column headerText="Category" field="CategoryTitleWithIcon" textAlign="Justify" width="250px"></e-grid-column>
-                <e-grid-column headerText="Date" field="Date" width="200px" type="date" format="MMM-dd-yy" textAlign="Center" width="100px"></e-grid-column>
+                <e-grid-column headerText="Category" field="CategoryTitleWithIcon" textAlign="Justify" width="200px"></e-grid-column>
+                <e-grid-column headerText="Date" field="Date" type="date" format="MMM-dd-yy" textAlign="Center" width="100px"></e-grid-column>
                 <e-grid-column headerText="Amount" template="#amountColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
                 <e-grid-column headerText="Actions" template="#actionColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
             </e-grid-columns>

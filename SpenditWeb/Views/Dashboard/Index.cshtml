@@ -10,7 +10,7 @@
     </div -->
     <div class="alert alert-warning alert-dismissible text-center" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <strong><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; &nbsp; &nbsp;Alert! Your balance is off track!</strong>
+        <strong><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; &nbsp;Alert! Your balance is off track!</strong>
     </div>
 }
 
@@ -90,7 +90,7 @@
             </div>
             <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="white">
                 <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="@ViewBag.DoughnutChartData2"
+                    <e-accumulation-series dataSource="@ViewBag.DoughnutChartData1"
                                            xName="CategoryTitleWithIcon" yName="amount"
                                            innerRadius="40%" legendShape="Circle"
                                            palettes=@(new string[]{"#dc3545", "#00ffff", "#f39c12", "#e74c3c","#2c3e50","#ffd700","#2d3142","#3498db","#20c997"})>
@@ -112,7 +112,7 @@
             </div>
             <ejs-accumulationchart id="doughnutchart2" enableSmartLabels background="white">
                 <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="@ViewBag.DoughnutChartData1"
+                    <e-accumulation-series dataSource="@ViewBag.DoughnutChartData2"
                                            xName="CategoryTitleWithIcon" yName="amount"
                                            innerRadius="40%" legendShape="Circle"
                                            palettes=@(new string[]{"#6f42c1","#ffd700","#2d3142","#3498db","#20c997", "#5e5871", "#00ffff", "#f39c12", "#e74c3c"})>
@@ -134,14 +134,14 @@
 
 @*Spline Chart & Recent Transactions*@
 <div class="row mb-5">
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="p-4">
-            <h5 class="fw-bold">Income Vs Expense</h5>
+            <h5 class="fw-bold">Income Vs Expense for Last 30 days</h5>
         </div>
         <div class="widget chart">
             <ejs-chart id="spline-chart" background="white"
                        palettes=@(new string[]{ "#00ffff","#ff5733"})>
-                <e-chart-primaryxaxis valueType="Category" interval=30>
+                <e-chart-primaryxaxis valueType="Category" interval=1>
                     <e-majorgridlines width="0"></e-majorgridlines>
                     <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryxaxis>
@@ -157,7 +157,7 @@
                               yName="expense" name="Expense" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"
                               splineType="@Syncfusion.EJ2.Charts.SplineType.Natural" fill="#eb740e"></e-series>
                 </e-series-collection>
-                <e-chart-legendsettings position="Top" alignment="Far" toggleVisibility="false">
+                <e-chart-legendsettings position="Top" alignment="Far" toggleVisibility="true">
                     <e-legendsettings-textstyle color="#000" size="1rem"></e-legendsettings-textstyle>
                 </e-chart-legendsettings>
                 <e-chart-tooltipsettings enable shared></e-chart-tooltipsettings>
@@ -165,7 +165,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="p-4">
             <h5 class="fw-bold">Recent Transactions</h5>
         </div>
@@ -173,11 +173,10 @@
                   allowSorting="true">
 
             <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
-            <e-grid-searchSettings fields="@(new string[] { "CategoryTitleWithIcon", "Date"})" operator="contains" key="" ignoreCase="true"></e-grid-searchSettings>
             <e-grid-columns>
-                <e-grid-column headerText="Category" field="CategoryTitleWithIcon" textAlign="Justify" width="150px"></e-grid-column>
-                <e-grid-column headerText="Date" field="Date" width="200px" type="date" format="MMM-dd-yy" textAlign="Center" width="75px"></e-grid-column>
-                <e-grid-column headerText="Amount" template="#amountColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
+                <e-grid-column headerText="Category" field="CategoryTitleWithIcon" textAlign="Justify" width="75px"></e-grid-column>
+                <e-grid-column headerText="Date" field="Date" type="date" format="MMM-dd-yy" textAlign="Center" width="40px"></e-grid-column>
+                <e-grid-column headerText="Amount" template="#amountColumnTemplate" textAlign="Center" width="50px"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
     </div>
