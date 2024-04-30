@@ -5,8 +5,12 @@
 }
 @if (balance < 0)
 {
-    <div style="margin-bottom:20px;">
+    <!-- div style="margin-bottom:20px;">
         <ejs-message id="msg_warning" content="Alert! Your balance is off track!" variant="Text" cssClass="e-content-center" severity="Warning"></ejs-message>
+    </div -->
+    <div class="alert alert-warning alert-dismissible text-center" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; &nbsp; &nbsp;Alert! Your balance is off track!</strong>
     </div>
 }
 
