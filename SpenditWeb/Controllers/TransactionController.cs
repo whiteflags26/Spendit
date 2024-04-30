@@ -29,7 +29,7 @@ namespace SpenditWeb.Controllers
         // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Transactions.Where(t => t.UserId== _userManager.GetUserId(User)).Include(t => t.Category);
+            var applicationDbContext = _context.Transactions.Where(t => t.Category.UserId== _userManager.GetUserId(User)).Include(t => t.Category);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -68,7 +68,6 @@ namespace SpenditWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
-            transaction.UserId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 _context.Add(transaction);
@@ -105,7 +104,6 @@ namespace SpenditWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
-            transaction.UserId = _userManager.GetUserId(User);
             if (id != transaction.TransactionId)
             {
                 return NotFound();

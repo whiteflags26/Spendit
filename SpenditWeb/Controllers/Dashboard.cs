@@ -31,7 +31,7 @@ namespace SpenditWeb.Controllers
 
             List<Transaction> SelectedTransactions = await _context.Transactions
             .Include(x => x.Category)
-                .Where(y => y.Date >= StartDate && y.Date <= EndDate && y.UserId == _userManager.GetUserId(User))
+                .Where(y => y.Date >= StartDate && y.Date <= EndDate && y.Category.UserId == _userManager.GetUserId(User))
                 .ToListAsync();
 
             //Console.WriteLine('*');
@@ -133,7 +133,7 @@ namespace SpenditWeb.Controllers
                                       };
             //Recent Transactions
             ViewBag.RecentTransactions = await _context.Transactions
-                .Where(h => h.UserId == _userManager.GetUserId(User))
+                .Where(h => h.Category.UserId == _userManager.GetUserId(User))
                 .Include(i => i.Category)
                 .OrderByDescending(j => j.Date)
                 .Take(10)

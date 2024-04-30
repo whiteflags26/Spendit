@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,6 +13,9 @@ namespace Spendit.Models
         [Column(TypeName = "nvarchar(450)")]
         [ValidateNever]
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        [ValidateNever]
+        public IdentityUser User { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }

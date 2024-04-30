@@ -9,10 +9,6 @@ namespace Spendit.Models
         [Key]
         public int TransactionId { get; set; }
 
-        //[Required(ErrorMessage = "UserId can not be NUll")]
-        [Column(TypeName = "nvarchar(450)")]
-        [ValidateNever]
-        public string UserId { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Please select a Category")]
         public int CategoryId { get; set; }
