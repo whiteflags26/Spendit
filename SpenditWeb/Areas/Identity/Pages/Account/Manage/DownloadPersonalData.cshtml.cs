@@ -11,8 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Spendit.DataAccess;
 using Spendit.Models;
-using DinkToPdf;
-using DinkToPdf.Contracts;
+
 
 namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
 {
@@ -21,18 +20,15 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;
         private readonly ApplicationDbContext _context;
-        private readonly IConverter _pdfConverter;
 
         public DownloadPersonalDataModel(
             UserManager<IdentityUser> userManager,
             ILogger<DownloadPersonalDataModel> logger,
-            ApplicationDbContext context,
-            IConverter pdfConverter)
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _logger = logger;
             _context = context;
-            _pdfConverter = pdfConverter;
         }
 
         public IActionResult OnGet()
@@ -116,40 +112,10 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
             // Convert HTML string to byte array
             var content = Encoding.UTF8.GetBytes(htmlBuilder.ToString());
 
-            //// Set content type to HTML
-            //Response.Headers.TryAdd("Content-Disposition", "attachment; filename=PersonalData.html");
-            //return new FileContentResult(content, "text/html");
+            // Set content type to HTML
+            Response.Headers.TryAdd("Content-Disposition", "attachment; filename=PersonalData.html");
+            return new FileContentResult(content, "text/html");
 
-            var globalSettings = new GlobalSettings
-            {
-                ColorMode = ColorMode.Color,
-                Orientation = Orientation.Portrait,
-                PaperSize = PaperKind.A4,
-                Margins = new MarginSettings { Top = 10 },
-                DPI = 300,
-                DocumentTitle = "PersonalData"
-            };
-
-            var objectSettings = new ObjectSettings
-            {
-                PagesCount = true,
-                HtmlContent = htmlBuilder.ToString(),
-                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "css", "styles.css") },
-                HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
-            };
-
-            var pdf = new HtmlToPdfDocument()
-            {
-                GlobalSettings = globalSettings,
-                Objects = { objectSettings }
-            };
-
-            var pdfBytes = _pdfConverter.Convert(pdf);
-
-            // Set content type to PDF
-            Response.Headers.TryAdd("Content-Disposition", "attachment; filename=PersonalData.pdf");
-            return new FileContentResult(pdfBytes, "application/pdf");
         }
     }
 }
