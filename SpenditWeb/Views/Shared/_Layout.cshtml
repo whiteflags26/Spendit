@@ -9,23 +9,21 @@
     <title>@ViewData["Title"] - SpenditWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <!-- Syncfusion ASP.NET Core controls styles -->
-    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap5.css" />
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap.css" />
     @*<link href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap5-dark.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SpenditWeb.styles.css" asp-append-version="true" />
     <!-- Syncfusion ASP.NET Core controls scripts -->
     <script src="https://cdn.syncfusion.com/ej2/25.1.35/dist/ej2.min.js"></script>
 </head>
-<body class="e-bigger bg-light">
-    <!-- Applied bg-light class for a light background -->
+<body class="e-bigger">
     <header>
         <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" data-bs-theme="dark">
-            <!-- Applied bg-primary class for a colorful navbar -->
             <div class="container-fluid">
 
                 <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index" style="font-size: 30px;">
                 <img src="~/SpenditWeb.png" alt="Site Logo" style="height: 40px; width: auto;" /> Spendit
-                </a> <!-- Applied text-white class for white text -->
+                </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -56,8 +54,8 @@
     @*breadcrumb*@
     @if (ViewContext.RouteData.Values["controller"]!=null)
     {
-        <div class="container" style="margin-bottom: 20px; border-bottom: 1px solid #ccc;">
-            <ejs-breadcrumb id="breadcrumb"></ejs-breadcrumb>
+        <div class="container" style="margin-bottom: 40px;">
+            <ejs-breadcrumb id="breadcrumb" style="pointer-events:none;"></ejs-breadcrumb>
         </div>
     }
 

@@ -20,6 +20,7 @@ namespace Spendit.Models
         [Column(TypeName = "nvarchar(75)")]
         public string? Note{ get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; } = DateTime.Now;
 
         [NotMapped]
