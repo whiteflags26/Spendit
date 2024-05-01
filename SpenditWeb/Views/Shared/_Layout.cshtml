@@ -9,7 +9,7 @@
     <title>@ViewData["Title"] - SpenditWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <!-- Syncfusion ASP.NET Core controls styles -->
-    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.42/bootstrap.css" />
     @*<link href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap5-dark.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SpenditWeb.styles.css" asp-append-version="true" />
@@ -52,7 +52,7 @@
     </header>
 
     @*breadcrumb*@
-    @if (ViewContext.RouteData.Values["controller"]!=null)
+    @if (SignInManager.IsSignedIn(User))
     {
         <div class="container" style="margin-bottom: 40px;">
             <ejs-breadcrumb id="breadcrumb" style="pointer-events:none;"></ejs-breadcrumb>
