@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using PuppeteerSharp;
 using Spendit.DataAccess;
 using Spendit.Models;
-
+using SpenditWeb.Controllers;
 
 namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
 {
@@ -20,15 +20,18 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly PdfGenerationService _pdfGenerationService;
 
         public DownloadPersonalDataModel(
             UserManager<IdentityUser> userManager,
             ILogger<DownloadPersonalDataModel> logger,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            PdfGenerationService pdfGenerationService)
         {
             _userManager = userManager;
             _logger = logger;
             _context = context;
+            _pdfGenerationService = pdfGenerationService;
         }
 
         public IActionResult OnGet()
@@ -38,41 +41,55 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null)
-            {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
 
             _logger.LogInformation("User with ID '{UserId}' asked for their personal data.", _userManager.GetUserId(User));
 
+            var htmlContent = GenerateHtmlContent(user);
+            var pdfBytes = await _pdfGenerationService.GeneratePdfFromHtml(htmlContent);
+
+            return File(pdfBytes, "application/pdf", "Personaldata.pdf");
+        }
+
+        private async Task<IdentityUser> GetUserAsync()
+        {
+            return await _userManager.GetUserAsync(User);
+        }
+
+        private string GenerateHtmlContent(IdentityUser user)
+        {
             var personalDataProps = typeof(IdentityUser).GetProperties().Where(
-               prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
+                prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
-            var logins = await _userManager.GetLoginsAsync(user);
-            string auth = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (auth == null) auth = "None";
+            var logins = _userManager.GetLoginsAsync(user).Result;
+            string auth = _userManager.GetAuthenticatorKeyAsync(user).Result ?? "None";
+            List<Category> categories = _context.Categories.Where(t => t.UserId == _userManager.GetUserId(User)).ToList();
+            List<Transaction> transactions = _context.Transactions
+                .Include(x => x.Category)
+                .Where(y => y.Category.UserId == _userManager.GetUserId(User))
+                .ToList();
 
-            List<Category> categories = await _context.Categories.Where(t => t.UserId == _userManager.GetUserId(User)).ToListAsync();
-            List<Transaction> transactions = await _context.Transactions
-           .Include(x => x.Category)
-               .Where(y => y.Category.UserId == _userManager.GetUserId(User))
-               .ToListAsync();
-
-            // Create HTML markup for the user data
             StringBuilder htmlBuilder = new StringBuilder();
             htmlBuilder.AppendLine("<html>");
             htmlBuilder.AppendLine("<head>");
             htmlBuilder.AppendLine("<style>");
-            htmlBuilder.AppendLine("table { border-collapse: collapse; width: 100%; }");
-            htmlBuilder.AppendLine("th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }");
-            htmlBuilder.AppendLine("th { background-color: #f2f2f2; }");
+            htmlBuilder.AppendLine("table { border-collapse: collapse; width: 100%; border: 2px solid #333; margin-bottom: 40px; }");
+            htmlBuilder.AppendLine("th, td { border: 1px solid #333; text-align: left; padding: 8px; }");
+            htmlBuilder.AppendLine("th { background-color: #ffffff; color: #333333; font-weight: bold; }");
+            htmlBuilder.AppendLine(".container { max-width: 800px; margin: 0 auto; padding: 20px; }");
+            htmlBuilder.AppendLine(".header { font-size: 24px; margin-bottom: 30px; }");
+            htmlBuilder.AppendLine(".sub-header { font-size: 18px; margin-bottom: 15px; }");
+            htmlBuilder.AppendLine(".footer { font-size: 14px; text-align: right; }");
             htmlBuilder.AppendLine("</style>");
             htmlBuilder.AppendLine("</head>");
             htmlBuilder.AppendLine("<body>");
 
-            // User Data Table
-            htmlBuilder.AppendLine("<h2>User Data</h2>");
+            htmlBuilder.AppendLine("<div class=\"container\">");
+            htmlBuilder.AppendLine("<h1 class=\"header\">Spendit Data</h1>");
+
+            htmlBuilder.AppendLine("<h2 class=\"sub-header\">User Data</h2>");
             htmlBuilder.AppendLine("<table>");
             htmlBuilder.AppendLine("<tr><th>Property</th><th>Value</th></tr>");
             foreach (var p in personalDataProps)
@@ -86,8 +103,7 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
             htmlBuilder.AppendLine($"<tr><td>Authenticator Key</td><td>{auth}</td></tr>");
             htmlBuilder.AppendLine("</table>");
 
-            // Category Data Table
-            htmlBuilder.AppendLine("<h2>Category Data</h2>");
+            htmlBuilder.AppendLine("<h2 class=\"sub-header\">Category Data</h2>");
             htmlBuilder.AppendLine("<table>");
             htmlBuilder.AppendLine("<tr><th>Category ID</th><th>Title</th><th>Icon</th><th>Type</th></tr>");
             foreach (var category in categories)
@@ -96,29 +112,29 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
             }
             htmlBuilder.AppendLine("</table>");
 
-            // Transaction Data Table
-            htmlBuilder.AppendLine("<h2>Transaction Data</h2>");
+            htmlBuilder.AppendLine("<h2 class=\"sub-header\">Transaction Data</h2>");
             htmlBuilder.AppendLine("<table>");
             htmlBuilder.AppendLine("<tr><th>Transaction ID</th><th>Category</th><th>Amount</th><th>Date</th><th>Note</th></tr>");
             foreach (var transaction in transactions)
             {
                 htmlBuilder.AppendLine($"<tr><td>{transaction.TransactionId}</td><td>{transaction.Category.TitleWithIcon}</td><td>{transaction.FormattedAmount}</td><td>{transaction.Date.ToString("MMMM dd, yyyy")}</td><td>{(string.IsNullOrEmpty(transaction.Note) ? "No note provided" : transaction.Note)}</td></tr>");
             }
-
             htmlBuilder.AppendLine("</table>");
+
+            DateTime currentDateTime = DateTime.Now;
+            TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+            string footerText = $"*Generated by Spendit on {currentDateTime.ToString("dd MMM, yyyy hh:mm:ss tt")} {localTimeZone.DisplayName} time";
+            htmlBuilder.AppendLine($"<p class=\"footer\">{footerText}</p>");
+
+            htmlBuilder.AppendLine("</div>");
             htmlBuilder.AppendLine("</body>");
             htmlBuilder.AppendLine("</html>");
 
-            // Convert HTML string to byte array
-            var content = Encoding.UTF8.GetBytes(htmlBuilder.ToString());
-
-            // Set content type to HTML
-            Response.Headers.TryAdd("Content-Disposition", "attachment; filename=PersonalData.html");
-            return new FileContentResult(content, "text/html");
-
+            return htmlBuilder.ToString();
         }
     }
 }
+
 /* Text file generation
  using System;
 using System.Collections.Generic;
@@ -247,6 +263,12 @@ namespace SpenditWeb.Areas.Identity.Pages.Account.Manage
             var content = Encoding.UTF8.GetBytes(string.Join("\n", personalData));
             Response.Headers.TryAdd("Content-Disposition", "attachment; filename=PersonalData.txt");
             return new FileContentResult(content, "text/plain");
+            
+            // Convert HTML string to byte array
+            // var content = Encoding.UTF8.GetBytes(htmlBuilder.ToString());
+            // Set content type to HTML
+            //Response.Headers.TryAdd("Content-Disposition", "attachment; filename=PersonalData.html");
+            //return new FileContentResult(content, "text/html");
         }
     }
 }
