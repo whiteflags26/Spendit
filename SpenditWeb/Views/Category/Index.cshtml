@@ -4,20 +4,16 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewData["PageActionText"] = "+ New Category";
-    ViewData["PageActionUrl"] = "/Category/Create";
 }
 
 <p>
     <div>
-        @if (ViewData["PageActionText"] != null)
-        {
-            <a class="btn btn-danger" href="@ViewData["PageActionUrl"]">
-                @ViewData["PageActionText"]
-            </a>
-        }
+        <a class="btn btn-danger" href="Category/Create">
+            <i class="bi bi-plus-lg"></i> New Category
+        </a>
     </div>
 </p>
+
 <div class="row">
     <div class="col-md-12">
         <ejs-grid id="categories" dataSource="@Model" gridLines="None"

@@ -41,13 +41,11 @@
                                             placeholder="Date" floatLabelType="Always"
                                             format="MMM-dd-yy"></ejs-datepicker>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
-                        </div>
-                    </form>
-                    <div class="mt-3">
-                        <a asp-action="Index">Back to List</a>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" style="margin-right:5px;" /> 
+                        <button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("Index", "Transaction")'">Back to List</button>
                     </div>
+                    </form>
                 </div>
         </div>
     </div>

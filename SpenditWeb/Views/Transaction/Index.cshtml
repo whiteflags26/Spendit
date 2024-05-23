@@ -4,18 +4,13 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewData["PageActionText"] = "+ New Transaction";
-    ViewData["PageActionUrl"] = "/Transaction/Create";
 }
 
 <p>
     <div>
-        @if (ViewData["PageActionText"] != null)
-        {
-            <a class="btn btn-danger" href="@ViewData["PageActionUrl"]">
-                @ViewData["PageActionText"]
-            </a>
-        }
+        <a class="btn btn-danger" href="Transaction/Create">
+            <i class="bi bi-plus-lg"></i> New Transaction
+        </a>
     </div>
 </p>
 <div class="row">

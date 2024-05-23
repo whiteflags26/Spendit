@@ -19,7 +19,8 @@
                         <ejs-dropdownlist id="ddlCategory" ejs-for="CategoryId"
                                           dataSource="@ViewBag.Categories" placeholder="Category"
                                           floatLabelType="Always" allowFiltering="true" ignoreAccent="true"
-                                          filterType="Contains" popupHeight="220px">
+                                          filterType="Contains" popupHeight="220px"
+                                          itemTemplate="#itemTemplate">
                             <e-dropdownlist-fields value="CategoryId" text="TitleWithIcon"></e-dropdownlist-fields>
                         </ejs-dropdownlist>
                         <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
@@ -41,19 +42,22 @@
                                         format="MMM-dd-yy"></ejs-datepicker>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <input type="submit" value="Save" class="btn btn-primary" style="margin-right:5px;"/> 
+                        <button type="button" class="btn btn-outline-success" onclick="location.href='@Url.Action("Index", "Transaction")'">Back to List</button>
                     </div>
                 </form>
-                <div>
-                    <a asp-action="Index">Back to List</a>
-                </div>
         </div>
     </div>
 </div>
 
-
-
-
+<script id="itemTemplate" type="text/x-template">
+    <span class="title-with-icon">${TitleWithIcon}</span>
+    ${if (Type == "Income")}
+        <span class="badge bg-info">${Type}</span>
+    ${else if(Type == "Expense")}
+        <span class="badge bg-danger">${Type}</span>
+    ${/if}
+</script>
 
 @section Scripts {
     @{
