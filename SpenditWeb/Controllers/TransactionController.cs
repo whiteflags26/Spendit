@@ -179,7 +179,7 @@ namespace SpenditWeb.Controllers
         public void PopulateCategories()
         {
             var CategoryCollection = _context.Categories.Where(x=> x.UserId == _userManager.GetUserId(User)).ToList();
-            Category DefaultCategory = new Category() { CategoryId = 0, Title = "Choose a Category" };
+            Category DefaultCategory = new Category() { CategoryId = 0, Title = "Choose a Category", Type = ""};
             CategoryCollection.Insert(0, DefaultCategory);
          
             ViewBag.Categories = CategoryCollection;

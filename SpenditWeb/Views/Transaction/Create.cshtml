@@ -10,8 +10,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <h1>
-                Create Transaction</h4>
+            <h1>Create Transaction</h1>
                 <hr />
                 <div class="row">
                     <form asp-action="Create">
@@ -20,7 +19,8 @@
                             <ejs-dropdownlist id="ddlCategory" ejs-for="CategoryId"
                                               dataSource="@ViewBag.Categories" placeholder="Category"
                                               floatLabelType="Always" allowFiltering="true" ignoreAccent="true"
-                                              filterType="Contains" popupHeight="220px">
+                                              filterType="Contains" popupHeight="220px"
+                                              itemTemplate="#itemTemplate">
                                 <e-dropdownlist-fields value="CategoryId" text="TitleWithIcon"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                             <span asp-validation-for="CategoryId" class="text-danger fs-6"></span>
@@ -32,8 +32,9 @@
                             <span asp-validation-for="Amount" class="text-danger fs-6"></span>
                         </div>
                         <div class="mb-3">
-                            <ejs-textbox id="note" placeholder="Note" ejs-for="Note"
+                            <ejs-textbox id="note" placeholder="Note" ejs-for="Note" showClearButton
                                          floatLabelType="Always" multiline="true"></ejs-textbox>
+                            <span asp-validation-for="Note" class="text-danger fs-6"></span>
                         </div>
                         <div class="mb-3">
                             <ejs-datepicker id="date" ejs-for="Date"
@@ -53,6 +54,14 @@
 </div>
 
 
+<script id="itemTemplate" type="text/x-template">
+        <span class="title-with-icon">${TitleWithIcon}</span>
+        ${if (Type == "Income")}
+            <span class="badge bg-info">${Type}</span>
+        ${else if(Type == "Expense")}
+            <span class="badge bg-danger">${Type}</span>
+        ${/if}
+</script>
 
 @section Scripts {
     @{

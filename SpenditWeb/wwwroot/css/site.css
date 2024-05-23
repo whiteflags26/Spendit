@@ -19,6 +19,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    /*font-family: Roboto, sans-serif;*/
 }
 <!--
 background-color : #12161d;
@@ -85,4 +86,8 @@ color : #ffffff;-->
     color: #fff;
 }
 /********************/
+
+.title-with-icon {
+    margin-right: 20px; /* Transaction controller create.cshtml page needs this */
+}
 

@@ -31,8 +31,9 @@
                         <span asp-validation-for="Amount" class="text-danger fs-6"></span>
                     </div>
                     <div class="mb-3">
-                        <ejs-textbox id="note" placeholder="Note" ejs-for="Note"
-                                     floatLabelType="Always" multiline="true"></ejs-textbox>
+                        <ejs-textbox id="note" placeholder="Note" ejs-for="Note" showClearButton
+                                     floatLabelType="Always" multiline="true" ></ejs-textbox>
+                        <span asp-validation-for="Note" class="text-danger fs-6"></span>
                     </div>
                     <div class="mb-3">
                         <ejs-datepicker id="date" ejs-for="Date"

@@ -5405,7 +5405,7 @@ textarea.form-control-lg {
     --bs-badge-font-weight: 700;
     --bs-badge-color: #fff;
     --bs-badge-border-radius: var(--bs-border-radius);
-    display: inline-block;
+    display: inline;    /*display: inline-block;*/
     padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
     font-size: var(--bs-badge-font-size);
     font-weight: var(--bs-badge-font-weight);

@@ -9,7 +9,6 @@ namespace Spendit.Models
         [Key]
         public int TransactionId { get; set; }
 
-
         [Range(1, int.MaxValue, ErrorMessage = "Please select a Category")]
         public int CategoryId { get; set; }
         public Category? Category { get; set; } //navigational property for foreign key
@@ -17,7 +16,8 @@ namespace Spendit.Models
         [Range(1, int.MaxValue, ErrorMessage = "Amount should be greater than 0")]
         public int Amount { get; set; }
 
-        [Column(TypeName = "nvarchar(75)")]
+        [StringLength(150, ErrorMessage = "Note cannot exceed 150 characters.")]
+        [Column(TypeName = "nvarchar(150)")]
         public string? Note{ get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}", ApplyFormatInEditMode = true)]
