@@ -68,11 +68,16 @@
     </div>
 
     <footer class="border-top footer text-white bg-primary">
-        <!-- Applied text-white and bg-dark classes for white text and a dark background -->
-        <div class="container">
-            <i class="bi bi-file-code-fill"></i>  2024 - SPL-15 - <a class="link text-decoration-none" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> <!-- Applied text-white class for white text -->
+        <div class="container d-flex justify-content-between">
+            <div>
+                <a class="link text-decoration-none" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-fill-check"></i>&nbsp;Privacy</a>
+            </div>
+            <div>
+                <i class="bi bi-gear-wide-connected"></i> SPL Team-15, &nbsp;&nbsp; 2024
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

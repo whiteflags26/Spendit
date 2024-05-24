@@ -1,4 +1,5 @@
-﻿using PuppeteerSharp;
+﻿using Microsoft.Extensions.Options;
+using PuppeteerSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,17 @@ namespace Spendit.Models
 {
     public class PdfGenerationService
     {
+        private readonly string _chromiumPath;
+
+        public PdfGenerationService(IOptions<ChromiumSettings> chromiumSettings)
+        {
+            _chromiumPath = chromiumSettings.Value.ChromiumPath;
+        }
+
         public async Task<byte[]> GeneratePdfFromHtml(string htmlContent)
         {
             // Set the path to the Chromium executable
-            var chromiumPath = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
-            if (string.IsNullOrEmpty(chromiumPath))
+            if (string.IsNullOrEmpty(_chromiumPath))
             {
                 throw new Exception("Chromium executable path is not specified.");
             }
@@ -22,7 +29,7 @@ namespace Spendit.Models
             var launchOptions = new LaunchOptions
             {
                 Headless = true,
-                ExecutablePath = chromiumPath // Specify the path to Chromium executable
+                ExecutablePath = _chromiumPath // Specify the path to Chromium executable
             };
 
             using var browser = await Puppeteer.LaunchAsync(launchOptions);
