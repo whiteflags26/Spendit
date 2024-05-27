@@ -88,6 +88,22 @@ color : #ffffff;-->
 /********************/
 
 .title-with-icon {
-    margin-right: 20px; /* Transaction controller create.cshtml page needs this */
+    margin-right: 20px; /* Transaction controller create.cshtml page needs this for Category Selection*/
 }
+
+/***********************/
+
+/*Transaction controller create.cshtml page needs this for Note (counting characters)*/
+#numbercount {
+    margin-left: 363px;
+    color: #eb740e;
+    font-size: 12px;
+}
+
+.custom-textbox {
+    height: 80px;
+}
+
+
+/***********************/
 
