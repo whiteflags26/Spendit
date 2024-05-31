@@ -27,26 +27,26 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index" style="font-size: 30px;">
-                    <img src="~/SpenditWeb.png" alt="Site Logo" style="height: 40px; width: auto;" /> Spendit
+                <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index" style="font-size: 47px;padding-right:40px;">
+                    <img src="~/SpenditWeb.png" alt="Site Logo" style="height: 47px; width: auto;" /> <b>Spendit</b>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="font-size:16px;font-weight:600;">
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-menu-button-fill"></i> Dashboard</a>
+                                <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-menu-button-fill"></i>&nbsp;Dashboard</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index"><i class="bi bi-tags-fill"></i> Category</a>
+                                <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index"><i class="bi bi-tags-fill"></i>&nbsp;Category</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Transaction" asp-action="Index"><i class="bi bi-currency-exchange"></i> Transaction</a>
+                                <a class="nav-link" asp-area="" asp-controller="Transaction" asp-action="Index"><i class="bi bi-currency-exchange"></i>&nbsp;Transaction</a>
                             </li>
                         </ul>
                         <div class="d-flex">
@@ -86,7 +86,7 @@
                 <a class="link text-decoration-none" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-shield-fill-check"></i>&nbsp;Privacy</a>
             </div>
             <div>
-                <i class="bi bi-gear-wide-connected"></i> SPL Team-15, &nbsp;&nbsp; 2024
+                <i class="bi bi-gear-wide-connected"></i>&nbsp;SPL Team-15, &nbsp;&nbsp; 2024
             </div>
         </div>
     </footer>
