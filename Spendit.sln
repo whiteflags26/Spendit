@@ -5,11 +5,11 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpenditWeb", "SpenditWeb\SpenditWeb.csproj", "{DCCD0EF3-BC00-4078-A3EE-EC482EB82BE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendit.DataAccess", "Spendit.DataAccess\Spendit.DataAccess.csproj", "{C556090E-F356-4913-9A60-DFDEBF0A77B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spendit.DataAccess", "Spendit.DataAccess\Spendit.DataAccess.csproj", "{C556090E-F356-4913-9A60-DFDEBF0A77B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendit.Models", "Spendit.Models\Spendit.Models.csproj", "{F5FE3E19-3FE6-4F6F-BB4A-7800EFBB8E47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spendit.Models", "Spendit.Models\Spendit.Models.csproj", "{F5FE3E19-3FE6-4F6F-BB4A-7800EFBB8E47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spendit.Utility", "Spendit.Utility\Spendit.Utility.csproj", "{847975BF-1E5E-47FB-8060-DB18763CFEDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spendit.Utility", "Spendit.Utility\Spendit.Utility.csproj", "{847975BF-1E5E-47FB-8060-DB18763CFEDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
