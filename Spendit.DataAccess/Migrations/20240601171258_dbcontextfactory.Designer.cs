@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spendit.DataAccess;
 
@@ -11,9 +12,11 @@ using Spendit.DataAccess;
 namespace SpenditWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240601171258_dbcontextfactory")]
+    partial class dbcontextfactory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,7 +260,7 @@ namespace SpenditWeb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Spendit.Models.Group", b =>
@@ -274,7 +277,7 @@ namespace SpenditWeb.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Spendit.Models.GroupCategory", b =>
@@ -308,7 +311,7 @@ namespace SpenditWeb.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("GroupCategories", (string)null);
+                    b.ToTable("GroupCategories");
                 });
 
             modelBuilder.Entity("Spendit.Models.GroupTransaction", b =>
@@ -340,7 +343,7 @@ namespace SpenditWeb.Migrations
 
                     b.HasIndex("GroupCategoryId");
 
-                    b.ToTable("GroupTransactions", (string)null);
+                    b.ToTable("GroupTransactions");
                 });
 
             modelBuilder.Entity("Spendit.Models.Membership", b =>
@@ -355,7 +358,7 @@ namespace SpenditWeb.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Memberships", (string)null);
+                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("Spendit.Models.Transaction", b =>
@@ -383,7 +386,7 @@ namespace SpenditWeb.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Spendit.Models.SpenditUser", b =>
