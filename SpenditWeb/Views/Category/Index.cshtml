@@ -23,6 +23,8 @@
                 <e-grid-column headerText="Category" field="TitleWithIcon" textAlign="Justify" width="200px"></e-grid-column>
                 <e-grid-column headerText="Type" template="#typeColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
                 <e-grid-column headerText="Actions" template="#actionColumnTemplate" textAlign="Center" width="100px"></e-grid-column>
+                @* for searching purpose *@
+                <e-grid-column field="Type" visible=false></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
     </div>
