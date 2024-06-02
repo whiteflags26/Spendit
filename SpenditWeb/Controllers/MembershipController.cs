@@ -59,7 +59,7 @@ namespace SpenditWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MemberId,GroupId")] Membership membership)
+        public async Task<IActionResult> Create([Bind("MemberId,GroupId,IsAdmin")] Membership membership)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace SpenditWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MemberId,GroupId")] Membership membership)
+        public async Task<IActionResult> Edit(string id, [Bind("MemberId,GroupId,IsAdmin")] Membership membership)
         {
             if (id != membership.MemberId)
             {

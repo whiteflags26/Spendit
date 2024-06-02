@@ -37,7 +37,7 @@ namespace Spendit.Models
         public DateTime Date { get; set; } = DateTime.Now;
 
 
-        bool IsApproved { get; set; } = false;
+        public bool IsApproved { get; set; } = false;
 
 
         [NotMapped]

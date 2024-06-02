@@ -36,7 +36,7 @@ namespace Spendit.Models
         [Column(TypeName = "nvarchar(15)")]
         public string Type { get; set; } = "Expense";
 
-        bool IsApproved { get; set; } = false;
+        public bool IsApproved { get; set; } = false;
 
         [NotMapped]
         public string? TitleWithIcon

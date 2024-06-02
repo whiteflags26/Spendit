@@ -57,7 +57,7 @@ namespace SpenditWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GroupCategoryId,CreatorId,GroupId,Title,Icon,Type")] GroupCategory groupCategory)
+        public async Task<IActionResult> Create([Bind("GroupCategoryId,CreatorId,GroupId,Title,Icon,Type,IsApproved")] GroupCategory groupCategory)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace SpenditWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GroupCategoryId,CreatorId,GroupId,Title,Icon,Type")] GroupCategory groupCategory)
+        public async Task<IActionResult> Edit(int id, [Bind("GroupCategoryId,CreatorId,GroupId,Title,Icon,Type,IsApproved")] GroupCategory groupCategory)
         {
             if (id != groupCategory.GroupCategoryId)
             {

@@ -20,6 +20,8 @@ namespace Spendit.Models
 
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 
 }

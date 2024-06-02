@@ -57,7 +57,7 @@ namespace SpenditWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GroupTransactionId,CreatorId,GroupCategoryId,Amount,Note,Date")] GroupTransaction groupTransaction)
+        public async Task<IActionResult> Create([Bind("GroupTransactionId,CreatorId,GroupCategoryId,Amount,Note,Date,IsApproved")] GroupTransaction groupTransaction)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace SpenditWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GroupTransactionId,CreatorId,GroupCategoryId,Amount,Note,Date")] GroupTransaction groupTransaction)
+        public async Task<IActionResult> Edit(int id, [Bind("GroupTransactionId,CreatorId,GroupCategoryId,Amount,Note,Date,IsApproved")] GroupTransaction groupTransaction)
         {
             if (id != groupTransaction.GroupTransactionId)
             {
