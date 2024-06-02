@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Spendit.DataAccess;
 using Spendit.Models;
+using Spendit.Services;
+using System.Globalization;
 
 namespace SpenditWeb.Controllers
 {
@@ -13,12 +15,14 @@ namespace SpenditWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly PredictionService _predictionService;
 
-        public Dashboard(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public Dashboard(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager, PredictionService predictionService)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _predictionService = predictionService;
         }
 
         public async Task<ActionResult> Index()
@@ -126,8 +130,44 @@ namespace SpenditWeb.Controllers
                 .Include(i => i.Category)
                 .OrderByDescending(j => j.Date)
                 .Take(10)
-                .ToListAsync();
+            .ToListAsync();
 
+
+
+            
+            //prediction graph
+            bool predictionSuccess = true;
+
+            try
+            {
+                var historicalData = _predictionService.GetHistoricalData(_userManager.GetUserId(User));
+                var predictedData = _predictionService.GetPredictedData(historicalData);
+
+                var chartData = historicalData
+                    .Select(h => new ChartData
+                    {
+                        Period = h.Month.ToString("MMM, yy", CultureInfo.InvariantCulture),
+                        Amount = h.TotalAmount
+                    })
+                    .ToList();
+
+                var predictedChartData = predictedData
+                    .Select(p => new ChartData
+                    {
+                        Period = p.Month.ToString("MMM, yy", CultureInfo.InvariantCulture),
+                        Amount = p.TotalAmount
+                    })
+                    .ToList();
+
+                ViewBag.HistoricalData = chartData;
+                ViewBag.PredictedData = predictedChartData;
+            }
+            catch (InvalidOperationException ex)
+            {
+                predictionSuccess = false; 
+            }
+
+            ViewBag.PredictionSuccess = predictionSuccess;
 
             return View();
         }
@@ -138,5 +178,11 @@ namespace SpenditWeb.Controllers
         public int income;
         public int expense;
 
+    }
+
+    public class ChartData
+    {
+        public string Period { get; set; }
+        public int Amount { get; set; }
     }
 }

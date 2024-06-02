@@ -18,6 +18,56 @@
 <partial name="_BudgetOverview" />
 
 
+
+
+
+@* Balance Prediction Line Graph *@
+@if (ViewBag.PredictionSuccess == true)
+{
+    <div class="alert alert-info alert-dismissible text-center" style="margin-top:70px;" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong><i class="bi bi-info-circle-fill"></i>&nbsp; &nbsp;Congrats! You can see balnce insight.</strong>
+    </div>
+
+    <div class="text-center mb-4" style="margin-top:40px;">
+        <h3 class="display-4" style="margin-bottom: 30px;">
+            <b><i class="bi bi-stars"></i>&nbsp;&nbsp;Balance Insight</b>
+        </h3>
+    </div>
+    <div class="row mb-3" style="border: 1px solid #ccc;padding:30px;">
+        <div class="control-section" align="center">
+            <ejs-chart id="container" title="Monthly Savings Trend">
+                <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+                <e-chart-primaryxaxis valueType="Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis title="Amount">
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.HistoricalData" xName="Period" yName="Amount" name="Historical Data" type="Line">
+                        <e-series-marker visible="true" height="7" width="7" shape="Circle" isFilled="true"></e-series-marker>
+                    </e-series>
+                    <e-series dataSource="@ViewBag.PredictedData" xName="Period" yName="Amount" name="Predicted Data" type="Line" dashArray="5,5">
+                        <e-series-marker visible="true" height="7" width="7" shape="Diamond" isFilled="true"></e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
 <div class="text-center mb-4" style="margin-top:70px;">
     <!-- Added mb-4 class for bottom margin -->
     <h3 class="display-4" style="margin-bottom: 30px;">

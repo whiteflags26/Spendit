@@ -17,7 +17,7 @@
     <div class="col-md-12">
         <ejs-grid id="transactions" dataSource="@Model" gridLines="None"
                   allowSorting="true" allowPaging="true" toolbar="@(new List<string>() { "Search"})">
-            <e-grid-pagesettings pageSize="10"></e-grid-pagesettings>
+            <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
             <e-grid-columns>
                 <e-grid-column headerText="Category" field="CategoryTitleWithIcon" textAlign="Justify" width="200px"></e-grid-column>
                 <e-grid-column headerText="Date" field="Date" type="date" format="MMM-dd-yy" textAlign="Center" width="100px"></e-grid-column>

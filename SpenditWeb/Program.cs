@@ -2,6 +2,7 @@ using Spendit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Spendit.DataAccess;
+using Spendit.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<PdfGenerationService>();
+builder.Services.AddScoped<PredictionService>();
 
 
 //DI
