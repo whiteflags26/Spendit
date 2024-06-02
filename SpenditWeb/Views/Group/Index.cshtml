@@ -5,23 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    <div>
-        <a class="btn btn-danger" href="Group/Create">
-            <i class="bi bi-plus-lg"></i> New Group
-        </a>
-    </div>
-</p>
+<div style="margin-bottom:30px;">
+    <a class="btn btn-danger" href="Group/Create">
+        <i class="bi bi-plus-lg"></i> New Group
+    </a>
+</div>
+
 
 <div class="row">
     @foreach (var item in Model)
     {
         <div class="col-md-2 mb-1">
             <div class="card h-100" style="border-width: 1px; border-style: solid; border-color: dimgray">
-                <img src="~/placeholder.png" class="card-img-top img-fluid" alt="Group Logo" style="height: 150px; object-fit: cover;">
+                <img src="~/groupPlaceholder.png" class="card-img-top img-fluid" alt="Group Logo" style="height: 150px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a href="@Url.Action("Details", "Groups", new { id = item.GroupId })" class="btn btn-outline-primary">
+                        <a href="@Url.Action("Dashboard", "Group", new { id = item.GroupId })" class="btn btn-outline-primary">
                             <b>@Html.DisplayFor(modelItem => item.Name)</b>
                         </a>
                     </h5>

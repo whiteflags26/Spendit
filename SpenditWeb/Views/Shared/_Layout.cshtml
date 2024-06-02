@@ -71,12 +71,52 @@
 
     </header>
 
+
+    @{
+        string controllerName = "", actionName = "";
+        if (ViewContext.RouteData.Values["controller"] != null)
+        {
+            controllerName = ViewContext.RouteData.Values["controller"].ToString();
+            actionName = ViewContext.RouteData.Values["action"].ToString();
+        }
+    }
     @*breadcrumb*@
-    @if (SignInManager.IsSignedIn(User))
+    @if (string.IsNullOrEmpty(controllerName) == false &&
+    (controllerName == "Dashboard" ||
+    controllerName == "Category" ||
+    controllerName == "Transaction" ||
+    (controllerName == "Group" && actionName == "Index"))
+    )
     {
         <div class="container" style="margin-bottom: 40px;">
             <ejs-breadcrumb id="breadcrumb" style="pointer-events:none;"></ejs-breadcrumb>
         </div>
+    }
+
+    @* Group Navbar *@
+    @if ((controllerName == "Group"  && actionName == "Dashboard") ||
+          controllerName == "GroupCategory" ||
+          controllerName == "GroupTransaction" ||
+          controllerName == "Membership"
+          )
+    {
+        <div class="container" style="margin-bottom:40px;margin-top:70px;">
+            <div class="btn-group btn-group-toggle btn-group-custom d-flex" role="group">
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Group" asp-action="Dashboard">Group Dashboard</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="GroupCategory" asp-action="Index">Group Category</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="GroupTransaction" asp-action="Index">Group Transaction</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Membership" asp-action="Index">Membership</a>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                // Set the active class on button click
+                $('.btn-group-toggle .btn').on('click', function () {
+                    $('.btn-group-toggle .btn').removeClass('btn-primary').addClass('btn-outline-primary');
+                    $(this).removeClass('btn-outline-primary').addClass('btn-primary');
+                });
+            });
+        </script>
     }
 
 

@@ -27,21 +27,27 @@ namespace SpenditWeb.Controllers
         }
 
         // GET: Group/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var @group = await _context.Groups
+        //        .FirstOrDefaultAsync(m => m.GroupId == id);
+        //    if (@group == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(@group);
+        //}
+
+        // GET: Group/Create
+        public async Task<IActionResult> Dashboard()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @group = await _context.Groups
-                .FirstOrDefaultAsync(m => m.GroupId == id);
-            if (@group == null)
-            {
-                return NotFound();
-            }
-
-            return View(@group);
+            return View();
         }
 
         // GET: Group/Create
@@ -54,7 +60,7 @@ namespace SpenditWeb.Controllers
         //To protect from overposting attacks, enable the specific properties you want to bind to.
         //For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 
-       [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GroupId,Name")] Group @group)
         {
@@ -62,13 +68,24 @@ namespace SpenditWeb.Controllers
             {
                 _context.Add(@group);
                 await _context.SaveChangesAsync();
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var membership = new Membership
+                {
+                    MemberId = userId,
+                    GroupId = @group.GroupId,
+                    IsAdmin = true
+                };
+
+                _context.Add(membership);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(@group);
         }
-
-        
-
 
         // GET: Group/Edit/5
         public async Task<IActionResult> Edit(int? id)
